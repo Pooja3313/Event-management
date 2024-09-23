@@ -1,0 +1,115 @@
+/* General sidebar styles */
+.sidebar {
+  background-color: #fdfcfcd3;
+  width: 250px;
+  height: 100vh;
+  padding: 20px;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 997;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .logo {
+  line-height: 1;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.sidebar .btn-getstarted {
+  color: #ffffff;
+  background: #649dc6;
+  font-size: 14px;
+  padding: 10px 25px;
+  border-radius: 25px;
+  transition: background 0.3s ease;
+  text-align: center;
+}
+
+.sidebar .btn-getstarted:hover {
+  background: #649dc6;
+}
+
+.sidebar .navmenu ul {
+  padding: 0;
+  list-style: none;
+  margin-top: 30px;
+}
+
+.sidebar .navmenu li {
+  margin-bottom: 20px;
+}
+
+.sidebar .navmenu a {
+  color: #061b3e;
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .navmenu a:hover,
+.sidebar .navmenu .active {
+  background-color: #649dc6;
+  color: #1b1a1a;
+}
+
+/* desktop navigation toggle */
+.mobile-nav-toggle {
+  display: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    color: #007bff;
+    font-size: 28px;
+    line-height: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 9999;
+  }
+
+  .mobile-nav-active .sidebar {
+    transform: translateX(0);
+  }
+
+  body.mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .sidebar .navmenu ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar .navmenu li {
+    margin-bottom: 15px;
+  }
+
+  .sidebar .btn-getstarted {
+    width: 100%;
+    padding: 12px 0;
+    margin-top: 20px;
+  }
+}
