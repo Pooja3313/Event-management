@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer,useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import eventsData from '../Dummydata/Dummydata'; // Import your dummy data
 import { toast } from 'react-toastify';
+import { eventReducer, initialState } from '../reducer/Reducer';
 
 // Styled Components (Reused from AddEvent)
 const FormContainer = styled.form`
@@ -18,6 +19,7 @@ const FormContainer = styled.form`
   flex-direction: column;
   
 `;
+
 
 const InputContainer = styled.div`
   margin-bottom: 20px;
@@ -85,12 +87,13 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-const EditEvent = () => {
+const EditEvent = ({ state, dispatch }) => {
+  // const [state, dispatch] = useReducer(eventReducer, initialState);
   const { id } = useParams();
   const navigate = useNavigate();
   
   // Find event to edit from dummy data
-  const eventToEdit = eventsData.find(event => event.id === parseInt(id));
+  const eventToEdit = state.events.find(event => event.id === parseInt(id));  
 
   const [formData, setFormData] = useState({
     title: '',
@@ -98,7 +101,7 @@ const EditEvent = () => {
     date: '',
     time: '',
     location: '',
-    status: 'Upcoming'
+    status: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -163,9 +166,17 @@ const EditEvent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Updated Event Data:', formData);
+      // Dispatch the EDIT_EVENT action with the updated form data
+      console.log("Dispatching edit event:", {
+        id: eventToEdit.id,
+        ...formData
+      });
+      dispatch({
+        type: 'EDIT_EVENT',
+        payload: { id: eventToEdit.id, ...formData }
+      });
 
-      // Show success toast message
+      // Show success toast message 
       toast.success('Event updated successfully!');
 
       // Redirect to event list after successful update
@@ -176,7 +187,9 @@ const EditEvent = () => {
   };
 
   return (
+    <>
     <FormContainer onSubmit={handleSubmit}>
+      {/* <div className='abc'> */}
       <Title>Edit Event</Title>
 
       <InputContainer>
@@ -247,7 +260,9 @@ const EditEvent = () => {
       </InputContainer>
 
       <Button type="submit">Update Event</Button>
+      {/* </div> */}
     </FormContainer>
+    </>
   );
 };
 

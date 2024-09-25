@@ -26,9 +26,9 @@ const Header = styled.h2`
   margin-bottom: 10px;
 `;
 
-const EventDashboard = () => {
-  const upcomingEvents = eventsData.filter(event => event.status === 'Upcoming');
-  const pastEvents = eventsData.filter(event => event.status === 'Past');
+const EventDashboard = ({ state}) => {
+  const upcomingEvents = state.events.filter(event => event.status === 'Upcoming');
+  const pastEvents = state.events.filter(event => event.status === 'Past');
 
   return (
     <DashboardContainer>

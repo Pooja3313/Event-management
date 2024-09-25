@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useReducer,useState } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { eventReducer, initialState } from '../reducer/Reducer';
 // Styled Components
 const FormContainer = styled.form`
   width: 100%;
@@ -84,7 +84,9 @@ const Title = styled.h2`
 `;
 
 
-const AddEvent = () => {
+const AddEvent = ({dispatch}) => {
+
+  // const [state, dispatch] = useReducer(eventReducer, initialState);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -142,31 +144,41 @@ const AddEvent = () => {
     });
   };
 
+  // Function to reset form fields
+  const resetForm = () => {
+    setFormData({
+      title: '',
+      description: '',
+      date: '',
+      time: '',
+      location: '',
+      status: ''
+    });
+    setErrors({});  // Optionally, clear any error messages
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+  
     if (validateForm()) {
-      console.log('Form Submitted', formData);
+      const newEvent = { ...formData, id: Date.now() };
 
+      // Dispatch the 'ADD_EVENT' action with the form data as payload
+      dispatch({ type: 'ADD_EVENT', payload: newEvent });
+  
       // Show success toast message
       toast.success('Event added successfully!');
-
+  
       // Reset form fields to empty after successful submission
-      setFormData({
-        title: '',
-        description: '',
-        date: '',
-        time: '',
-        location: '',
-        status: ''
-      });
-
-      // Optionally, clear any error messages
-      setErrors({});
-    }else{
-        toast.error('Please fill out all fields correctly before submitting.');
-
-      }
-    };
+     resetForm();
+  
+     
+    } else {
+      // Show error toast message if form validation fails
+      toast.error('Please fill out all fields correctly before submitting.');
+    }
+  };
+  
   
 
   return (
@@ -242,6 +254,12 @@ const AddEvent = () => {
       </InputContainer>
 
       <Button type="submit">Add Event</Button>
+      {/* <Button 
+        type="submit"
+        disabled={!validateForm()} // Disable button if form is invalid
+      >
+        Add Event
+      </Button> */}
     </FormContainer>
   );
 };
