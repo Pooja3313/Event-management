@@ -11,7 +11,14 @@ Remove any ::after content from Bootstrap's styles for icons */
 /* General Reset (for text, margins, and spacing) */
 
 
-
+*, ::after, ::before {
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
 /* Fonts */
 :root {
   --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
