@@ -10,7 +10,7 @@
     },
     {
       id: 2,
-      title: 'Node.js Conference',
+      title: 'Node js Conference',
       description: 'Explore the latest in server-side development with Node.js.',
       date: '2024-08-20',
       time: '09:00',
