@@ -1,4 +1,16 @@
 
+/* .bi-grid-fill::after { content: "\f3fb" !important; }
+Remove any ::after content from Bootstrap's styles for icons */
+/* .bi-grid-fill::after {
+  content: none !important;
+} */
+/* .bi-grid-fill::before {
+  content: "\f3fb" !important;
+  font-family: "bootstrap-icons" !important;
+} */
+/* General Reset (for text, margins, and spacing) */
+
+
 
 /* Fonts */
 :root {

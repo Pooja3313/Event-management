@@ -1,4 +1,15 @@
 /* General sidebar styles */
+*, ::after, ::before {
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  line-height: 1;
+  font-weight: 500;
+  vertical-align: -.125em;
+  margin-top: 0;
+  padding-top: 0;
+
+}
+
 .sidebar {
   background-color: #fdfcfcd3;
   width: 250px;
@@ -12,16 +23,54 @@
   top: 0;
   left: 0;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 !important; /* Ensure no extra margin pushes it down */
+  padding: 0 20px !important;
 }
 
-.sidebar .logo {
+.logo {
   line-height: 1;
   font-size: 1.6rem;
   font-weight: bold;
   color: #333;
 }
 
-.sidebar .btn-getstarted {
+.sitename {
+  font-family: "Nunito", sans-serif;
+  font-weight: 500;
+  color: #061b3e;
+  margin: 0; /* Remove any unwanted margin */
+  padding: 10px 0 !important; /* Add some padding for consistent spacing */
+}
+
+.navmenu ul {
+  padding: 0 ;
+  list-style: none;
+  margin-top: 30px;
+}
+
+.navmenu li {
+  margin-bottom: 20px;
+}
+
+.navmenu a {
+  color: #061b3e;
+  /* font-size: 16px; */
+  font-size: 1em !important;
+  font-weight: 500;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.navmenu a:hover,
+.navmenu .active {
+  background-color: #649dc6;
+  color: #1b1a1a;
+}
+
+.btn-getstarted {
   color: #ffffff;
   background: #649dc6;
   font-size: 14px;
@@ -31,39 +80,12 @@
   text-align: center;
 }
 
-.sidebar .btn-getstarted:hover {
+.btn-getstarted:hover {
   background: #649dc6;
 }
 
-.sidebar .navmenu ul {
-  padding: 0;
-  list-style: none;
-  margin-top: 30px;
-}
-
-.sidebar .navmenu li {
-  margin-bottom: 20px;
-}
-
-.sidebar .navmenu a {
-  color: #061b3e;
-  font-size: 16px;
-  font-weight: 500;
-  display: block;
-  padding: 10px 15px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.sidebar .navmenu a:hover,
-.sidebar .navmenu .active {
-  background-color: #649dc6;
-  color: #1b1a1a;
-}
-
-/* desktop navigation toggle */
-.mobile-nav-toggle {
+/* Mobile navigation toggle button */
+.mobileNavToggle {
   display: none;
 }
 
@@ -77,7 +99,7 @@
     transition: transform 0.3s ease;
   }
 
-  .mobile-nav-toggle {
+  .mobileNavToggle {
     display: block;
     color: #007bff;
     font-size: 28px;
@@ -97,19 +119,25 @@
     overflow: hidden;
   }
 
-  .sidebar .navmenu ul {
+  .navmenu ul {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .sidebar .navmenu li {
+  .navmenu li {
     margin-bottom: 15px;
   }
 
-  .sidebar .btn-getstarted {
+  .btn-getstarted {
     width: 100%;
     padding: 12px 0;
     margin-top: 20px;
   }
 }
+.sidebar h2.sitename {
+  font-size: 1.5em !important; /* Ensure size is enforced */
+}
+
+
+

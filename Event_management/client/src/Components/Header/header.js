@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import "./header.css";
+import styles from "./header.module.css"; // updated import
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTh,faList } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
   useEffect(() => {
-    // Mobile Nav Toggle functionality
-    const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
-
+    const mobileNavToggleBtn = document.querySelector(
+      `.${styles.mobileNavToggle}`
+    );
     const mobileNavToggle = () => {
       document.querySelector("body").classList.toggle("mobile-nav-active");
       mobileNavToggleBtn.classList.toggle("bi-list");
@@ -42,39 +44,32 @@ const Header = () => {
 
   return (
     <>
-      {/* Mobile nav toggle button */}
-      <i className="bi bi-list mobile-nav-toggle"></i>
+      <i className={`bi bi-list ${styles.mobileNavToggle}`}></i>
 
-      <aside id="sidebar" className="sidebar d-flex flex-column sticky-top">
-        <NavLink to="/" className="logo d-flex align-items-center mb-4">
-          <h2 className="sitename">Event Management</h2>
+      <aside id="sidebar" className={styles.sidebar}>
+        <NavLink to="/" className={styles.logo}>
+          <h2 className={styles.sitename}>Event Management</h2>
         </NavLink>
 
-        <nav id="navmenu" className="navmenu flex-grow-1">
+        <nav id="navmenu" className={styles.navmenu}>
           <ul>
-          <li>
+            <li>
               <NavLink to="/eventdashboard">
-                <i className="bi bi-grid-fill"></i> Event Dashboard
+              <FontAwesomeIcon icon={faTh} /> Event Dashboard
               </NavLink>
             </li>
             <li>
               <NavLink to="/eventlist">
-                <i className="bi bi-list-ul"></i> Event List
+              <FontAwesomeIcon icon={faList} /> Event List
               </NavLink>
             </li>
-          
             <li>
               <NavLink to="/addevent">
-                <i className="bi bi-list-ul"></i> Add Event 
+              <FontAwesomeIcon icon={faList} /> Add Event
               </NavLink>
             </li>
           </ul>
         </nav>
-
-        {/* Example for adding a 'Create Event' button if needed */}
-        {/* <NavLink className="btn-getstarted mt-auto" to="#">
-          <i className="bi bi-plus-lg"></i> Create Event
-        </NavLink> */}
       </aside>
     </>
   );
