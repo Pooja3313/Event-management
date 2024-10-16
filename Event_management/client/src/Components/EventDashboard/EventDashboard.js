@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import EventCard from '../Eventcard/Eventcard';
-import eventsData from '../Dummydata/Dummydata';
+import { useAuth } from "../Store/UseContext";
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -16,7 +16,6 @@ const DashboardContainer = styled.div`
   }
 `;
 
-
 const Section = styled.section`
   margin-bottom: 20px;
 `;
@@ -26,23 +25,46 @@ const Header = styled.h2`
   margin-bottom: 10px;
 `;
 
-const EventDashboard = ({ state}) => {
-  const upcomingEvents = state.events.filter(event => event.status === 'Upcoming');
-  const pastEvents = state.events.filter(event => event.status === 'Past');
+const EventDashboard = () => {
+  const { storerEvent, EventFROMLSGet} = useAuth();
+  const [events, setEvents] = useState([]); // State to hold events from localStorage
+
+  useEffect(() => {
+    // Retrieve events from localStorage
+    const storedEvents = EventFROMLSGet();
+    if (storedEvents) {
+      setEvents(JSON.parse(storedEvents));
+    }
+  }); 
+
+  // Filter upcoming and past events based on their status
+  const upcomingEvents = events.filter(event => event.status === 'Upcoming');
+  const pastEvents = events.filter(event => event.status === 'Past');
 
   return (
     <DashboardContainer>
+      {/* Upcoming Events Section */}
       <Section>
         <Header>Upcoming Events</Header>
-        {upcomingEvents.map((event, index) => (
-          <EventCard key={event.id} event={event} index={index + 1} />
-        ))}
+        {upcomingEvents.length > 0 ? (
+          upcomingEvents.map((event, index) => (
+            <EventCard key={event.id} event={event} index={index + 1} />
+          ))
+        ) : (
+          <p>No upcoming events.</p>
+        )}
       </Section>
+
+      {/* Past Events Section */}
       <Section>
         <Header>Past Events</Header>
-        {pastEvents.map((event, index) => (
-          <EventCard key={event.id} event={event} index={index + 1} />
-        ))}
+        {pastEvents.length > 0 ? (
+          pastEvents.map((event, index) => (
+            <EventCard key={event.id} event={event} index={index + 1} />
+          ))
+        ) : (
+          <p>No past events.</p>
+        )}
       </Section>
     </DashboardContainer>
   );

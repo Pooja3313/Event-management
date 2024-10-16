@@ -12,6 +12,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditEvent from './Components/EditEvent/EditEvent';
 import { eventReducer, initialState } from './Components/reducer/Reducer';
+import Register from './Components/Register/register';
+import Login from './Components/Login/login';
+import { Logout } from './Components/Logout/Logout';
 
 function App() {
   const [state, dispatch] = useReducer(eventReducer, initialState);
@@ -25,6 +28,9 @@ function App() {
     <Route path='/eventdetail/:id' element={<EventDetails state={state}/>} />
     <Route path='/addevent' element={<AddEvent dispatch={dispatch} />} />
     <Route path='/editevent/:id' element={<EditEvent state={state} dispatch={dispatch}/>} />
+    <Route path='/register' element={<Register/>} />
+    <Route path='/login' element={<Login/>} />
+    <Route path='/logout' element={<Logout/>}/>
   </Routes>
   <Footer/>
 

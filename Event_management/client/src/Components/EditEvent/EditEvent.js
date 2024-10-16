@@ -107,6 +107,10 @@ const EditEvent = ({ state, dispatch }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    // Fetch event data from localStorage
+    const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+    const eventToEdit = storedEvents.find(event => event.id === parseInt(id));
+    console.log("eventToEdit", eventToEdit);
     if (eventToEdit) {
       setFormData({
         title: eventToEdit.title,
@@ -117,7 +121,7 @@ const EditEvent = ({ state, dispatch }) => {
         status: eventToEdit.status,
       });
     }
-  }, [eventToEdit]);
+  }, [id]);
 
   // Regex patterns for validation
   const titleRegex = /^[a-zA-Z0-9\s]{5,100}$/; 
@@ -167,14 +171,23 @@ const EditEvent = ({ state, dispatch }) => {
     e.preventDefault();
     if (validateForm()) {
       // Dispatch the EDIT_EVENT action with the updated form data
-      console.log("Dispatching edit event:", {
-        id: eventToEdit.id,
-        ...formData
-      });
-      dispatch({
-        type: 'EDIT_EVENT',
-        payload: { id: eventToEdit.id, ...formData }
-      });
+      // console.log("Dispatching edit event:", {
+      //   id: eventToEdit.id,
+      //   ...formData
+      // });
+      // dispatch({
+      //   type: 'EDIT_EVENT',
+      //   payload: { id: eventToEdit.id, ...formData }
+      // });
+      const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+      const updatedEvents = storedEvents.map(event => 
+        event.id === parseInt(id) 
+          ? { ...event, ...formData } 
+          : event
+      );
+
+      // Update localStorage with the new events array
+      localStorage.setItem('events', JSON.stringify(updatedEvents));
 
       // Show success toast message 
       toast.success('Event updated successfully!');

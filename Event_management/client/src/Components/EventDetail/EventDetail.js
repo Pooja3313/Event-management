@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
+import { useAuth } from "../Store/UseContext";
 
-
-const EventDetails = ({ state }) => {
+const EventDetails = () => {
+  const { storerEvent, EventFROMLSGet} = useAuth();
   const { id } = useParams(); // Get the event ID from the URL
   const navigate = useNavigate(); // For navigation
-  const event = state.events.find((e) => e.id === parseInt(id)); // Find the event based on ID
+  const [event, setEvent] = useState(null); // State to store the specific event
 
+  // Use useEffect to fetch events from localStorage when the component mounts
+  useEffect(() => {
+    // Retrieve existing events from localStorage
+    let existingEvents;
+    try {
+      const storedEvents = EventFROMLSGet();
+      existingEvents = storedEvents ? JSON.parse(storedEvents) : [];
+    } catch (error) {
+      console.error("Error parsing events from localStorage:", error);
+      existingEvents = [];
+    }
+
+    // Find the event based on the ID from the URL
+    const foundEvent = existingEvents.find((e) => e.id === parseInt(id));
+
+    // Set the found event to the state
+    if (foundEvent) {
+      setEvent(foundEvent);
+    }
+  }, [id]); // The effect will run again if the id changes
+
+  // If the event is not found, show an error message
   if (!event) {
     return (
       <Typography variant="h6" sx={{ textAlign: "center", mt: 5 }}>

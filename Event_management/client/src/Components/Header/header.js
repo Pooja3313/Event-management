@@ -1,10 +1,21 @@
-import React, { useEffect } from "react";
-import  "./header.css";
-import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTh, faList, faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect,useState } from "react";
+import "./header.css";
+import { NavLink,useNavigate} from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTh,
+  faList,
+  faPlus,
+  faUserPlus,
+  faSignInAlt,
+  faSignOutAlt
+} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify"; 
+import { useAuth } from "../Store/UseContext";
 
 const Header = () => {
+  const {token ,usertype} = useAuth();
+
   useEffect(() => {
     // Mobile Nav Toggle functionality
     const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
@@ -41,6 +52,7 @@ const Header = () => {
       });
     };
   }, []);
+  
 
   return (
     <>
@@ -54,22 +66,62 @@ const Header = () => {
 
         <nav id="navmenu" className="navmenu flex-grow-1">
           <ul>
-          <li>
-              <NavLink to="/eventdashboard">
-              <FontAwesomeIcon icon={faTh} /> Event Dashboard
+          {usertype === "admin" ? (
+              <>
+                <li>
+                  <NavLink to="/eventlist">
+                    <FontAwesomeIcon icon={faList} /> Event List
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/addevent">
+                    <FontAwesomeIcon icon={faPlus} /> Add Event
+                  </NavLink>
+                </li>
+              
+              </>
+            ) : usertype === "user" ? (
+              <li>
+                <NavLink to="/eventdashboard">
+                  <FontAwesomeIcon icon={faTh} /> Event Dashboard
+                </NavLink>
+              </li>
+            ) : (
+              // Display this when usertype is empty (unknown)
+              <li>
+                <NavLink to="/eventdashboard">
+                  <FontAwesomeIcon icon={faTh} />Event Dashboard
+                </NavLink>
+              </li>
+            )}
+           
+            {token? (
+              <> 
+              <li>
+              <NavLink to="/logout">
+                <FontAwesomeIcon icon={faSignOutAlt} />
+                Logout
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/eventlist">
-              <FontAwesomeIcon icon={faList} /> Event List
+           
+            </>
+            ):(
+              <>
+              <li>
+              <NavLink to="/register">
+                <FontAwesomeIcon icon={faUserPlus} /> Register
               </NavLink>
             </li>
-          
-            <li>
-              <NavLink to="/addevent">
-              <FontAwesomeIcon icon={faPlus} /> Add Event 
+              <li>
+              <NavLink to="/login">
+                <FontAwesomeIcon icon={faSignInAlt} />
+                Login
               </NavLink>
             </li>
+            </>
+            )
+            };
+           
           </ul>
         </nav>
 
